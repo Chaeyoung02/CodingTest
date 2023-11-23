@@ -68,15 +68,14 @@ public class boj4179 {
 
 
     }
-     public static boolean BFS() {
-        while (!que2.isEmpty()) {
+     public static boolean BFS() { //지훈이보다 불이 먼저 번져야 하므로 불의 큐를 먼저 호출
+        while (!que2.isEmpty()) { //지훈이가 탈출하기까지 반복
             int size = que.size();
             while (size > 0) {
                 size--;
                 boj_4719 fire = que.poll();
 
                 for (int j = 0; j < 4; j++) {
-
 
                     int nx = fire.x + dx[j];
                     int ny = fire.y + dy[j];
@@ -92,7 +91,9 @@ public class boj4179 {
 
                 }
 
-            }
+            } //불의 큐 사이즈만큼 반복함
+            // 불은 범위를 넘어서도 안되고 방문한 곳도 안되고 벽을 만나서도 안된다.
+            // 위의 조건을 처리하고 난 곳은 불이 난 곳으로 저장한다.
             size = que2.size();
             while (size >0) {
                 size--;
@@ -114,7 +115,10 @@ public class boj4179 {
                     que2.add(new boj_4719(nx, ny, fire.count +1));
 
                 }
-            }
+            } //지훈이의 큐를 호출하여 반복
+            // 지훈이는 범위를 넘어서면 탈출이기 때문에 카운트한 값과 리턴으로 참
+            // 지훈이는 벽을 지나서도 안되고 불을 지나서도 안되고 방문한 곳도 지나선 안된다.
+            // 지훈이가 옮겨진 곳은 방문 표시를 한다.
 
 
         }
