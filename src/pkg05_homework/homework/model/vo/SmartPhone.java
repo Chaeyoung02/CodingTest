@@ -1,4 +1,4 @@
-package pkg05_homework.homework01.model.vo;
+package pkg05_homework.homework.model.vo;
 
 public abstract class SmartPhone implements CellPhone, TouchDisplay{
     public SmartPhone() {

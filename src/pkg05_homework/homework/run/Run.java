@@ -1,8 +1,8 @@
-package pkg05_homework.homework01.run;
+package pkg05_homework.homework.run;
 
-import pkg05_homework.homework01.model.vo.GalaxyS24;
-import pkg05_homework.homework01.model.vo.Iphone15;
-import pkg05_homework.homework01.model.vo.SmartPhone;
+import pkg05_homework.homework.model.vo.GalaxyS24;
+import pkg05_homework.homework.model.vo.Iphone15;
+import pkg05_homework.homework.model.vo.SmartPhone;
 
 public class Run {
     public static void main(String[] args){
