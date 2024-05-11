@@ -3,6 +3,9 @@ package set_homework;
 import java.util.Iterator;
 import java.util.Scanner;
 
+
+
+
 public class LotteryMenu {
     Scanner sc = new Scanner(System.in);
     LotteryController lc = new LotteryController();
@@ -94,9 +97,11 @@ public class LotteryMenu {
         System.out.print("휴대폰 번호(-빼고) : ");
         String phone = sc.nextLine();
         Lottery l = new Lottery(name, phone);
-        boolean check = lc.insertObject(l);
+        boolean check = lc.deleteObject(l);
+
         if(check) {
             System.out.println("삭제 완료되었습니다.");
+
         }else {
             System.out.println("존재하지 않는 대상입니다.");
         }
@@ -113,15 +118,30 @@ public class LotteryMenu {
 
     }
     public void sortedWinObject() {
+
+        //Iterator을 이용하여 값 도출
         Iterator<Lottery> itr= lc.sortedWinObject().iterator() ;
+        //lc.sortedWinObject()만 잘 건들이기
+
         while(itr.hasNext()) {
             Lottery l = itr.next();
-            System.out.println(l.getName()+"의 핸드폰 : "+l.getPhone());
+            System.out.println(l);
         }
-        System.out.println(lc.sortedWinObject());
+
 
     }
     public void searchWinner() {
+        System.out.print("이름 : ");
+        String name = sc.nextLine();
+        System.out.print("휴대폰 번호(-빼고) : ");
+        String phone = sc.nextLine();
+        Lottery l = new Lottery(name, phone);
+        boolean check = lc.searchWinnder(l);
+        if(check) {
+            System.out.println("축하합니다. 당첨 목록에 존재합니다");
+        }else {
+            System.out.println("다음 기회에!");
 
+        }
     }
 }

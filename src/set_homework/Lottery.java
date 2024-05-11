@@ -1,7 +1,6 @@
 package set_homework;
 
 import java.util.Objects;
-
 public class Lottery implements Comparable<Lottery>{
     private String name;
     private String phone;
@@ -45,8 +44,9 @@ public class Lottery implements Comparable<Lottery>{
 
     @Override
     public int compareTo(Lottery l) {
-        // TODO Auto-generated method stub
-        return 0;
+        return this.name.compareTo(l.getName());
+        //여기있는 이름과 들어온 이름과 같을경우
+
     }
 
 }
