@@ -45,12 +45,6 @@ public class ScoreDAO {
             fis = new FileInputStream(file);
             dis= new DataInputStream(fis);
             System.out.println("이름\t국어\t영어\t수학\t총점\t평균");
-//            String name = dis.readUTF();
-//            int kor = dis.readInt();
-//            int eng = dis.readInt();
-//            int math = dis.readInt();
-//            int sum = dis.readInt();
-//            double avg = dis.readDouble();
 
             return dis;
 
