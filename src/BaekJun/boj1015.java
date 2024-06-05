@@ -8,6 +8,7 @@ import java.util.StringTokenizer;
 
 
 public class boj1015 {
+    //백준 추가하기
 
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
