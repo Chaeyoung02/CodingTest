@@ -1,7 +1,9 @@
 package Happy_book.view;
 
 import Happy_book.controller.UserController;
+import Happy_book.model.vo.User;
 
+import java.sql.SQLException;
 import java.util.Scanner;
 
 public class BookMenu {
@@ -25,7 +27,7 @@ public class BookMenu {
         if(num.equals("1")){
             insertEmployee();
         }else if(num.equals("2")){
-            //updateEmployee();
+            updateEmployee();
         }else if(num.equals("3")){
             //deleteEmployee();
         }
@@ -42,6 +44,22 @@ public class BookMenu {
         String name = sc.nextLine();
 
         new UserController().insert(id, pwd, name);
+
+    }
+
+    //계정 수정
+    public void updateEmployee() {
+        System.out.println("***정보수정***");
+        System.out.print("아이디 : ");
+        String id = sc.nextLine();
+        System.out.println("--변경할 정보를 입력--");
+        System.out.print("비밀번호 : ");
+        String pwd = sc.nextLine();
+        System.out.print("이름 : ");
+        String name = sc.nextLine();
+        System.out.print("로그인 가능여부 : ");
+        String check = sc.nextLine();
+        new UserController().update(id, pwd,name, check);
 
     }
 }

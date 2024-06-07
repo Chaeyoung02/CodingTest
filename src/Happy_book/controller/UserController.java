@@ -4,6 +4,8 @@ import Happy_book.model.dao.UserDao;
 import Happy_book.model.vo.User;
 import Happy_book.view.BookMenu;
 
+import java.sql.SQLException;
+
 public class UserController {
     BookMenu bm = new BookMenu();
     public void Login(String id, String pwd){
@@ -39,6 +41,21 @@ public class UserController {
         }else {
             System.out.println("생성 실패. 다시 입력해주세요.");
             bm.managerMenu();
+        }
+    }
+
+    //계정 수정
+    public void update(String id, String pwd, String name, String check) {
+        User u = new User();
+        u.setEm_id(id);
+        u.setEm_pwd(pwd);
+        u.setEm_name(name);
+        u.setEm_check(check);
+        int result = new UserDao().update(u);
+        if(result > 0){
+            System.out.println("수정 완료");
+        }else {
+            System.out.println("수정 실패");
         }
     }
 }
