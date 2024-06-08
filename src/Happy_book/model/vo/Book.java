@@ -82,14 +82,11 @@ public class Book {
 
     @Override
     public String toString() {
-        return "Book{" +
-                "bk_no=" + bk_no +
-                ", bk_name='" + bk_name + '\'' +
-                ", bk_author='" + bk_author + '\'' +
-                ", bk_publisher='" + bk_publisher + '\'' +
-                ", bk_date=" + bk_date +
-                ", bk_price='" + bk_price + '\'' +
-                ", bk_amount=" + bk_amount +
-                '}';
+        return  bk_name + "||" +
+                bk_author + "||" +
+                bk_publisher + "||" +
+                bk_date + "||" +
+                bk_price + "||" +
+                bk_amount ;
     }
 }

@@ -19,7 +19,7 @@ public class UserController {
                 bm.managerMenu();
             }else {
                 System.out.println(u.getEm_name()+"님, 환영합니다~!");
-                bm.mainMenu();
+                bm.employeeMenu();
             }
 
         }else {
@@ -38,6 +38,7 @@ public class UserController {
         int result = new UserDao().insert(u);
         if(result > 0){
             System.out.println("생성 성공");
+            bm.managerMenu();
         }else {
             System.out.println("생성 실패. 다시 입력해주세요.");
             bm.managerMenu();
@@ -54,8 +55,25 @@ public class UserController {
         int result = new UserDao().update(u);
         if(result > 0){
             System.out.println("수정 완료");
+            bm.managerMenu();
         }else {
             System.out.println("수정 실패");
+            bm.managerMenu();
+        }
+    }
+    //퇴사처리
+    public void fireEmployee(String id, String pwd, String name){
+        User u = new User();
+        u.setEm_id(id);
+        u.setEm_pwd(pwd);
+        u.setEm_name(name);
+        int result = new UserDao().fireEmployee(u);
+        if(result > 0){
+            System.out.println("삭제 완료");
+            bm.managerMenu();
+        }else {
+            System.out.println("삭제 실패");
+            bm.managerMenu();
         }
     }
 }
