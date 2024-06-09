@@ -96,12 +96,13 @@ public class BookMenu {
             deleteBook();
         }else if(num.equals("3")){
             new BookController().selectAll();
-           // buyBook();
+            buy();
         }else if(num.equals("4")){
             new BookController().selectAll();
             updateBook();
         }else {
-
+            System.out.println("다시입력해주세요");
+            employeeMenu();
         }
     }
     //도서정보등록
@@ -132,6 +133,30 @@ public class BookMenu {
     }
     //도서입고
     public void updateBook(){
+        System.out.println("***도서입고***");
+        System.out.println("도서이름 : ");
+        String name = sc.nextLine();
+        System.out.print("지은이 : ");
+        String author = sc.nextLine();
+        System.out.print("입고수량 : ");
+        int amount = sc.nextInt();
+        sc.nextLine();
 
+        new BookController().updateAmount(name, author, amount);
+
+    }
+
+    //도서 판매
+    public void buy(){
+        System.out.println("***도서판매***");
+        System.out.println("도서이름 : ");
+        String name = sc.nextLine();
+        System.out.print("지은이 : ");
+        String author = sc.nextLine();
+        System.out.print("판매수량 : ");
+        int amount = sc.nextInt();
+        sc.nextLine();
+
+        new BookController().buy(name, author, amount);
     }
 }

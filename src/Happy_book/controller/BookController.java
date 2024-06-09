@@ -48,4 +48,39 @@ public class BookController {
             bm.employeeMenu();
         }
     }
+    //도서입고
+    public void updateAmount(String name, String author, int amount){
+        Book b = new Book();
+        b.setBk_name(name);
+        b.setBk_author(author);
+        b.setBk_amount(amount);
+        int result = new BookDao().updateAmount(b);
+        if(result > 0) {
+            System.out.println("입고 완료");
+            bm.employeeMenu();
+        }else {
+            System.out.println("입고 실패");
+            bm.employeeMenu();
+        }
+    }
+
+    //도서 판매
+    public void buy(String name, String author, int amount) {
+        Book b = new Book();
+        b.setBk_name(name);
+        b.setBk_author(author);
+        b.setBk_amount(amount);
+        int result = new BookDao().buy(b);
+        if(result > 0) {
+            System.out.println("판매 완료");
+            bm.employeeMenu();
+        }else {
+            System.out.println("판매 실패");
+            bm.employeeMenu();
+        }
+
+
+
+
+    }
 }

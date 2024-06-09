@@ -17,7 +17,8 @@ public class UserDao {
 
             stmt = conn.createStatement();
 
-            String sql = "SELECT * FROM `tbl_employee` WHERE em_id = '" + u.getEm_id() + "' AND em_pwd = '" + u.getEm_pwd() + "'";
+            String sql = "SELECT * FROM `tbl_employee` WHERE em_id = '" + u.getEm_id() + "' AND em_pwd = '" + u.getEm_pwd() + "'" +
+                    "AND em_check ='Y'";
             rs = stmt.executeQuery(sql);
 
             if (rs.next()) {
@@ -90,6 +91,48 @@ public class UserDao {
                String sql2 = "UPDATE tbl_employee SET em_pwd = '"+u.getEm_pwd()+"', em_name='"+u.getEm_name()+"', em_check ='"+u.getEm_check()+"' " +
                        "WHERE em_id = '"+u.getEm_id()+"'";
                result = stmt.executeUpdate(sql2);
+            }
+            conn.commit();
+        } catch (SQLException e) {
+            if (conn != null) {
+                try {
+                    conn.rollback();
+                } catch (SQLException e2) {
+                    e2.printStackTrace();
+                }
+            }
+            e.printStackTrace();
+        } finally {
+            try {
+                rs.close();
+                stmt.close();
+                if (conn != null) conn.close();
+            } catch (SQLException e2) {
+                e2.printStackTrace();
+            }
+        }
+        return result;
+    }
+    //퇴사처리
+    public int fireEmployee(User u){
+        Connection conn = null;
+        Statement stmt = null;
+        ResultSet rs = null;
+        int result = 0;
+        try{
+            conn = DriverManager.getConnection(url, user, pwd);
+            conn.setAutoCommit(false);
+
+            stmt = conn.createStatement();
+
+            String sql = "SELECT * FROM `tbl_employee` WHERE em_id = '" + u.getEm_id() + "' AND em_pwd = '" + u.getEm_pwd() + "'";
+            rs = stmt.executeQuery(sql);
+
+            if (rs.next()) {
+                String sql2 = "UPDATE tbl_employee SET em_check = 'N' " +
+                        "WHERE em_id = '" + u.getEm_id() + "' AND em_pwd = '" + u.getEm_pwd() + "'" +
+                        "AND em_name = '" + u.getEm_name() + "'";
+                result = stmt.executeUpdate(sql2);
             }
             conn.commit();
         } catch (SQLException e) {
