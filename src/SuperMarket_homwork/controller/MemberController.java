@@ -1,4 +1,90 @@
-package SuperMarket_homwork.controller;
+package com.gn.controller;
 
+
+import java.util.List;
+
+import com.gn.model.dao.MemberDao;
+import com.gn.model.vo.Member;
+import com.gn.view.MemberMenu;
+
+//사용자의 요청 처리 : View에서 전달받은 데이터 가공 -> DAO
 public class MemberController {
+	boolean check = false;
+	public void insertMember(String memberId, String memberPwd, String memberName, String memberEmail, String memberPhone, String memberGender) {
+		//전달 받은 값을 DAO에 전달하기 위해 순수데이터 가공
+		Member m = new Member();
+		m.setMemberId(memberId);
+		m.setMemberPwd(memberPwd);
+		m.setMemberName(memberName);
+		m.setMemberEmail(memberEmail);
+		m.setMemberPhone(memberPhone);
+		m.setMemberGender(memberGender);
+		//DAO에 있는 insertMember 메소드 호출
+		int result = new MemberDao().insertMember(m);
+		if(result > 0) {
+			new MemberMenu().displaySuccess("회원추가");
+		}else {
+			new MemberMenu().displayFail("회원추가");
+		}
+	}
+	
+	public void selectMemberAll() {
+		//DAO에게 회원 전체 정보 조회A
+		List<Member> resultList = new MemberDao().selectMemberAll();
+		if(resultList.isEmpty()) {
+			new MemberMenu().displayNoDate();
+		}else {
+			new MemberMenu().displayMemberList(resultList);
+		}
+		
+	}
+	
+	public void selectByMemberId(String id) {
+		Member resultVo = new MemberDao().selectByMemberId(id);
+		if(resultVo == null) {
+			new MemberMenu().displayNoDate();
+		}else {
+			new MemberMenu().displayMember(resultVo);
+		}
+	}
+	
+	public void selectByMemberName(String word) {
+		List<Member> resultList = new MemberDao().selectByMemberName(word);
+		if(resultList.isEmpty()) {
+			new MemberMenu().displayNoDate();
+		}else {
+			new MemberMenu().displayMemberList(resultList);
+		}
+	}
+	public void updateMember(String memberId, String memberPwd, String memberName, String memberEmail, String memberPhone) {
+		Member m = new Member();
+		m.setMemberId(memberId);
+		m.setMemberPwd(memberPwd);
+		m.setMemberName(memberName);
+		m.setMemberEmail(memberEmail);
+		m.setMemberPhone(memberPhone);
+		
+		int result = new MemberDao().updateMember(m);
+		if(result > 0) {
+			System.out.println("수정완료");
+		}else {
+			System.out.println("수정중 오류");
+		}
+
+	}
+	public void deleteMember(String member_id) {
+		int result = new MemberDao().deleteMember(member_id);
+		if(result > 0) {
+			System.out.println("삭제 완료");
+		}else {
+			System.out.println("삭제 중 오류");
+		}
+	}
+	public int login(String memberId, String memberPwd) {
+		Member m = new Member();
+		m.setMemberId(memberId);
+		m.setMemberPwd(memberPwd);
+		int result = new MemberDao().login(m);
+		return result;
+	}
 }
