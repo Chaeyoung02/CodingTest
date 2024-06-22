@@ -1,4 +1,4 @@
-package com.gn.controller;
+package SuperMarket_homwork.controller;
 
 import com.gn.model.dao.BuyDao;
 import com.gn.model.vo.Buy;
