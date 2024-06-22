@@ -4,7 +4,7 @@ import java.util.Scanner;
 
 public class boj1788 {
     public static void main(String[] args) {
-        final int MOD = 1000000000;  // 모듈로 연산을 위한 큰 소수 정의
+        final int MOD = 1000000000;
         Scanner scanner = new Scanner(System.in);
         int num = scanner.nextInt();
         if(num > 0) {
