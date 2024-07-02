@@ -1,17 +1,14 @@
 package SuperMarket_homwork.model.dao;
 
-import SuperMarket_homwork.model.vo.Product;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.ArrayList;
-import java.util.List;
-public class ProductDao {
-	public int insert(Product p) {
+import SuperMarket_homwork.model.vo.User;
+
+import java.sql.*;
+
+public class UserDAO {
+	//회원가입
+	//중복값 확인
+	public int insert(User u) {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
@@ -21,10 +18,10 @@ public class ProductDao {
 			conn = DriverManager.getConnection(url,id,pwd);
 			conn.setAutoCommit(false);
 
-			String sql1 = "SELECT COUNT(*) AS cnt FROM sm_product WHERE prod_name = ?";
+
+			String sql1 = "SELECT COUNT(*) AS cnt FROM sm_user WHERE user_id = ?";
 			pstmt = conn.prepareStatement(sql1);
-			System.out.println(p.getProduct_name());
-			pstmt.setString(1,p.getProduct_name());
+			pstmt.setString(1, u.getUser_id());
 			rs = pstmt.executeQuery();
 			if(rs.next()) {
 				result = rs.getInt("cnt");
@@ -33,13 +30,14 @@ public class ProductDao {
 				//정상 INSERT : 1
 			}
 			if(result == 0) {
-				String sql2 = "INSERT INTO sm_product(prod_name, prod_price, prod_amount)"
+				String sql2 = "INSERT INTO sm_user(user_id, user_pwd, user_nick)"
 						+ " VALUES(?,?,?)";
 				pstmt = conn.prepareStatement(sql2);
-				pstmt.setString(1,p.getProduct_name());
-				pstmt.setString(2, p.getProduct_price());
-				pstmt.setInt(3,p.getProduct_amount());
+				pstmt.setString(1,u.getUser_id());
+				pstmt.setString(2, u.getUser_pwd());
+				pstmt.setString(3, u.getUser_nick());
 				result = pstmt.executeUpdate();
+
 
 
 			}else {
@@ -67,84 +65,31 @@ public class ProductDao {
 
 		return result;
 	}
-	public int add(Product p) {
-		Connection conn = null;
-		PreparedStatement pstmt = null;
-		ResultSet rs = null;
-		int result = 0;
-		try {
-
-			conn = DriverManager.getConnection(url,id,pwd);
-			conn.setAutoCommit(false);
-
-			String sql1 = "SELECT COUNT(*) AS cnt FROM sm_product WHERE prod_no = ?";
-			pstmt = conn.prepareStatement(sql1);
-			pstmt.setInt(1,p.getProd_no());
-			rs = pstmt.executeQuery();
-			if(rs.next()) {
-				result = rs.getInt("cnt");
-				//중복되는 아이디가 있는 경우 :-1
-				//INSERT과정 중 오류가 발생한 경우 : 0
-				//정상 INSERT : 1
-			}
-			if(result == 1) {
-				String sql2 = "UPDATE `sm_product` SET prod_amount = (? + prod_amount) WHERE prod_no = ?";
-
-				pstmt = conn.prepareStatement(sql2);
-				pstmt.setInt(1,p.getProduct_amount());
-				pstmt.setInt(2, p.getProd_no());
-				result = pstmt.executeUpdate();
-
-
-			}else {
-				//insert X
-				//중복되는 아이디가 있는 경우
-				result = 0;
-			}
-			conn.commit();
-
-		}catch (Exception e) {
-			e.printStackTrace();
-			try {
-				conn.rollback();
-			}catch (SQLException e1) {
-				e1.printStackTrace();
-			}
-		}finally {
-			try {
-				pstmt.close();
-				conn.close();
-			} catch (Exception e2) {
-				e2.printStackTrace();
-			}
-		}
-
-		return result;
-	}
-
-	public List<Product> selectAll(){
+	public User check(User u) {
 		Connection conn = null;
 		Statement stmt = null;
 		ResultSet rs = null;
-
-		List<Product> resultList = new ArrayList<Product>();
-
+		int result = 0;
+		User info =null;
 		try {
 
 
 			conn = DriverManager.getConnection(url, user, userPwd);
 
 			stmt = conn.createStatement();
-			String sql = "SELECT * FROM sm_product";
-			rs = stmt.executeQuery(sql);
 
-			while(rs.next()) {
-				Product p = new Product(rs.getInt("prod_no"),
-						rs.getString("prod_name"),
-						rs.getInt("prod_amount"),
-						rs.getString("prod_price")
-				);
-				resultList.add(p);
+			String sql1 = "SELECT * FROM `sm_user` WHERE user_id = '"+u.getUser_id()+"' AND user_pwd ='"+u.getUser_pwd()+"'";
+			rs = stmt.executeQuery(sql1);
+
+			if(rs.next()) {
+
+				info = new User(
+						rs.getInt("user_no"),
+						rs.getString("user_id"),
+						rs.getString("user_pwd"),
+						rs.getString("user_nick"),
+						rs.getTimestamp("sign_date").toLocalDateTime(),
+						rs.getTimestamp("update_date").toLocalDateTime());
 			}
 
 		} catch (Exception e) {
@@ -158,41 +103,47 @@ public class ProductDao {
 				e.printStackTrace();
 			}
 		}
-		return resultList;
+		return info;
 	}
-	//
-	public int deleteProduct(Product p){
+	public int update(User u) {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		int result = 0;
+
 		try {
 
 			conn = DriverManager.getConnection(url,id,pwd);
 			conn.setAutoCommit(false);
 
-			String sql1 = "SELECT (prod_amount - ?) AS cnt FROM sm_product WHERE prod_no = ?";
+
+			String sql1 = "SELECT COUNT(*) AS cnt FROM `sm_user` WHERE user_pwd = ? AND user_id = ?";
 			pstmt = conn.prepareStatement(sql1);
-			pstmt.setInt(1,p.getProduct_amount());
-			pstmt.setInt(2,p.getProd_no());
+			pstmt.setString(1, u.getUser_pwd());
+			pstmt.setString(2, u.getUser_id());
 			rs = pstmt.executeQuery();
 			if(rs.next()) {
+
 				result = rs.getInt("cnt");
 				//중복되는 아이디가 있는 경우 :-1
 				//INSERT과정 중 오류가 발생한 경우 : 0
 				//정상 INSERT : 1
 			}
-			if(result > 0) {
-				String sql2 = "UPDATE `sm_product` SET prod_amount = (prod_amount - ?) WHERE prod_no = ?";
+			if(result == 1) {
+				System.out.println("here");
+				String sql2 = "UPDATE `sm_user` SET  user_nick = ?"
+						+ " WHERE user_pwd= ? AND user_id = ?";
 				pstmt = conn.prepareStatement(sql2);
-				pstmt.setInt(1,p.getProduct_amount());
-				pstmt.setInt(2, p.getProd_no());
+				pstmt.setString(1, u.getUser_nick());
+				pstmt.setString(2, u.getUser_pwd());
+				pstmt.setString(3, u.getUser_id());
 				result = pstmt.executeUpdate();
+
 
 
 			}else {
 				//insert X
-				//중복되는 아이디가 있는 경우 
+				//중복되는 아이디가 있는 경우
 				result = 0;
 			}
 			conn.commit();
@@ -212,7 +163,63 @@ public class ProductDao {
 				e2.printStackTrace();
 			}
 		}
-
-		return result;
+		return result ;
 	}
+	public int deleteUser(User u, String pw) {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		int result = 0;
+		ResultSet rs =null;
+		try {
+
+			conn = DriverManager.getConnection(url,id,pwd);
+			conn.setAutoCommit(false);
+
+
+			String sql1 = "SELECT COUNT(*) AS cnt FROM `sm_user` WHERE user_pwd = ? AND user_id = ?";
+			pstmt = conn.prepareStatement(sql1);
+			pstmt.setString(1, u.getUser_pwd());
+			pstmt.setString(2, u.getUser_id());
+			rs = pstmt.executeQuery();
+
+			if(rs.next()) {
+
+				result = rs.getInt("cnt");
+				//중복되는 아이디가 있는 경우 :-1
+				//INSERT과정 중 오류가 발생한 경우 : 0
+				//정상 INSERT : 1
+			}
+			if(result == 1) {
+				System.out.println("here");
+				String sql2 = "DELETE FROM `sm_user` WHERE user_pwd = ? AND user_id = ?";
+				pstmt = conn.prepareStatement(sql2);
+				pstmt.setString(1, u.getUser_pwd());
+				pstmt.setString(2, u.getUser_id());
+				result = pstmt.executeUpdate();
+			}else {
+				//insert X
+				//중복되는 아이디가 있는 경우
+				result = 0;
+			}
+			conn.commit();
+
+
+		}catch (Exception e) {
+			e.printStackTrace();
+			try {
+				conn.rollback();
+			}catch (SQLException e1) {
+				e1.printStackTrace();
+			}
+		}finally {
+			try {
+				pstmt.close();
+				conn.close();
+			} catch (Exception e2) {
+				e2.printStackTrace();
+			}
+		}
+		return result ;
+	}
+
 }

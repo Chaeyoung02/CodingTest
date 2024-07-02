@@ -1,7 +1,8 @@
 package SuperMarket_homwork.controller;
 
-import com.gn.model.dao.BuyDao;
-import com.gn.model.vo.Buy;
+
+import SuperMarket_homwork.model.dao.BuyDao;
+import SuperMarket_homwork.model.vo.Buy;
 
 public class BuyController {
 	public void insert(int id, int prod_no, int buy_amount) {

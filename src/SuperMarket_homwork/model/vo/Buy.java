@@ -1,4 +1,4 @@
-package com.gn.model.vo;
+package SuperMarket_homwork.model.vo;
 
 public class Buy {
 	private int buy_no;

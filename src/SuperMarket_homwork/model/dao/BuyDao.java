@@ -1,4 +1,5 @@
-package com.gn.model.dao;
+package SuperMarket_homwork.model.dao;
+import SuperMarket_homwork.model.vo.Buy;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -9,8 +10,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.gn.model.vo.Buy;
-import com.gn.model.vo.Member;
+
 
 public class BuyDao {
 	public int insert(Buy b) {
@@ -19,11 +19,10 @@ public class BuyDao {
 
 		int result = 0;
 		try {
-			Class.forName("org.mariadb.jdbc.Driver");
-			//경로와 아이디와 비밀번호는 보안상으로 지웁니다
+
 			conn = DriverManager.getConnection(url,id,pwd);
 			conn.setAutoCommit(false);
-			
+
 			String sql = "INSERT INTO sm_buy(user_no, prod_no, buy_amount)"
 					+ " VALUES(?,?,?)";
 			pstmt = conn.prepareStatement(sql);
@@ -31,10 +30,10 @@ public class BuyDao {
 			pstmt.setInt(2,b.getProd_no());
 			pstmt.setInt(3,b.getBuy_amount());
 			result = pstmt.executeUpdate();
-			
-			
+
+
 			conn.commit();
-			
+
 		}catch (Exception e) {
 			e.printStackTrace();
 			try {
@@ -50,21 +49,19 @@ public class BuyDao {
 				e2.printStackTrace();
 			}
 		}
-		
+
 		return result;
 	}
 	public List<String> select() {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		Buy b = null; 
+		Buy b = null;
 		List<String> resultList = new ArrayList<String>();
 		try {
-			Class.forName("org.mariadb.jdbc.Driver");
-				//경로와 아이디와 비밀번호는 보안상으로 지웁니다
-			
+
 			conn = DriverManager.getConnection(url,user_id,pwd);
-			
+
 			String sql = "SELECT u.user_nick, p.prod_name, SUM(b.buy_amount) FROM sm_user u "
 					+ "JOIN sm_buy b ON u.user_no = b.user_no "
 					+ "JOIN sm_product p ON b.prod_no = p.prod_no "
@@ -79,7 +76,7 @@ public class BuyDao {
 				String result = nickname+ " "  + prodnameString + " " + amount;
 				resultList.add(result);
 			}
-			
+
 		}catch (Exception e) {
 			e.printStackTrace();
 		}finally {
@@ -90,7 +87,7 @@ public class BuyDao {
 				e.printStackTrace();
 			}
 		}
-	
+
 		return resultList;
 	}
 }

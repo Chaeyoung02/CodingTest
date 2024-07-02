@@ -1,26 +1,20 @@
-package com.gn.controller;
+package SuperMarket_homwork.controller;
+
+import SuperMarket_homwork.model.dao.BuyDao;
+import SuperMarket_homwork.model.dao.ProductDao;
+import SuperMarket_homwork.model.vo.Product;
+import SuperMarket_homwork.model.vo.User;
+import SuperMarket_homwork.view.SuperMarketMenu;
 
 import java.util.List;
-
-import com.gn.model.dao.BuyDao;
-import com.gn.model.dao.MemberDao;
-import com.gn.model.dao.ProductDao;
-import com.gn.model.dao.UserDao;
-import com.gn.model.vo.Buy;
-import com.gn.model.vo.Member;
-import com.gn.model.vo.Product;
-import com.gn.model.vo.User;
-import com.gn.view.MemberMenu;
-import com.gn.view.SuperMarketMenu;
-
 public class ProductController {
-	SuperMarketMenu sm = new SuperMarketMenu();
+SuperMarketMenu sm = new SuperMarketMenu();
 	public void insert(String prod_name, String prod_price, int prod_amount) {
 		Product p = new Product();
 		p.setProduct_name(prod_name);
 		p.setProduct_price(prod_price);
 		p.setProduct_amount(prod_amount);
-		
+
 		int result = new ProductDao().insert(p);
 		// insert 오류 : 0
 		//정상작동 : 1
@@ -30,9 +24,9 @@ public class ProductController {
 		}else {
 			System.out.println("제품등록 실패");
 			sm.adminMenu();
-			
+
 		}
-		
+
 	}
 	//제품 입고
 	public void add(int prod_no, int prod_amount) {
@@ -58,9 +52,9 @@ public class ProductController {
 			}
 		}
 	}
-	
+
 	//제품 총량 감소
-	public void deleteProduct(User u ,int prod_no, int prod_amount) {
+	public void deleteProduct(User u , int prod_no, int prod_amount) {
 		Product p = new Product();
 		p.setProd_no(prod_no);
 		p.setProduct_amount(prod_amount);

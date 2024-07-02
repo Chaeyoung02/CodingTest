@@ -1,20 +1,20 @@
-package com.gn.model.vo;
+package SuperMarket_homwork.model.vo;
 
 public class Product {
 	private int prod_no;
 	private String product_name;
 	private int product_amount;
 	private String product_price;
-	
+
 	public Product() {}
 	public Product(int prod_no, String product_name, int product_amount, String product_price) {
 		this.product_price= product_price;
 		this.prod_no = prod_no;
 		this.product_amount = product_amount;
 		this.product_name = product_name;
-		
+
 	}
-	
+
 	public int getProd_no() {
 		return prod_no;
 	}
@@ -45,6 +45,6 @@ public class Product {
 				+ "||" + product_price ;
 	}
 
-	
-	
+
+
 }

@@ -1,18 +1,17 @@
-package com.gn.view;
+package SuperMarket_homwork.view;;
 
 import java.util.Scanner;
 
-import com.gn.controller.BuyController;
-import com.gn.controller.MemberController;
-import com.gn.controller.ProductController;
-import com.gn.controller.UserController;
-import com.gn.model.vo.User;
+import SuperMarket_homwork.controller.BuyController;
+import SuperMarket_homwork.controller.ProductController;
+import SuperMarket_homwork.controller.UserController;
+import SuperMarket_homwork.model.vo.User;
 
 public class SuperMarketMenu {
 	Scanner sc = new Scanner(System.in);
 	User u = null;
 	public void mainMenu() {
-		
+
 		while(true) {
 			System.out.println("**메뉴선택**");
 			System.out.println("1. 회원가입 선택");
@@ -29,7 +28,7 @@ public class SuperMarketMenu {
 				System.out.println("다시 입력");
 			}
 		}
-		
+
 	}
 	//회원가입 선택한 경우, 
 	public void Sign() {
@@ -40,26 +39,26 @@ public class SuperMarketMenu {
 		System.out.print("닉네임 : ");
 		String nick = sc.nextLine();
 		new UserController().insert(id, pwd, nick);
-		
-	}	
-	
+
+	}
+
 	public void Login() {
 		System.out.println("**로그인**");
 		System.out.print("아이디 : ");
 		String id = sc.nextLine();
 		System.out.print("비밀번호 : ");
 		String pwd = sc.nextLine();
-		 u = new UserController().check(id,pwd);
+		u = new UserController().check(id,pwd);
 		if(u.getUser_id().equals("admin")) {
 			System.out.println(u.getUser_nick()+" 로 로그인되었습니다.");
-			adminMenu();				
+			adminMenu();
 		}
 		else {
 			System.out.println(u.getUser_nick()+" 로 로그인되었습니다.");
 			userMenu(u);
 		}
 	}
-	
+
 	//관리자 메뉴
 	public void adminMenu() {
 		while(true) {
@@ -82,10 +81,10 @@ public class SuperMarketMenu {
 			else {
 				System.out.println("다시 입력");
 				continue;
-				
+
 			}
 		}
-		
+
 	}
 	//제품등록
 	public void insertProduct() {
@@ -134,12 +133,12 @@ public class SuperMarketMenu {
 			else {
 				System.out.println("다시 입력");
 				continue;
-				
+
 			}
 		}
-		
+
 	}
-	
+
 	public void buyProduct(User u) {
 		System.out.print("구매하고 싶은 제품 번호 : ");
 		int prod_no = sc.nextInt();
@@ -149,7 +148,7 @@ public class SuperMarketMenu {
 		sc.nextLine();
 		new BuyController().insert(u.getUser_no(),prod_no, buy_amount);//구매테이블 구매내역 추가
 		new ProductController().deleteProduct(u, prod_no, buy_amount);//제품 총량 감소
-		
+
 	}
 	public void updateInfo(User u) {
 		System.out.println("**회원정보수정**");
@@ -157,9 +156,9 @@ public class SuperMarketMenu {
 		String pwd = sc.nextLine();
 		System.out.print("닉네임 : ");
 		String nick =sc.nextLine();
-		
+
 		new UserController().update(u, pwd,nick);
-			
+
 	}
 	public void deleteInfo(User u) {
 		System.out.println("**회원탈퇴**");
