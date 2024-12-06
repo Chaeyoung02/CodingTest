@@ -24,6 +24,7 @@ public class boj2309 {
                         System.out.println(arr[k]);
                     }
                     return;
+
                 }
             }
         }
