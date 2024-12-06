@@ -26,7 +26,6 @@ public class safeArea {
         }
         return answer;
     }
-
     private void updateFuction(int i, int j, int n, int[][] map){
         int[] dx = {-1, -1, -1, 0, 0, 1, 1, 1};
         int[] dy = {-1, 0, 1, -1, 1, -1, 0, 1};
