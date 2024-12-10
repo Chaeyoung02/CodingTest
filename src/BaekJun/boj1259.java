@@ -21,7 +21,6 @@ public class boj1259 {
             if(str.equals("0")){
                 break;
             }
-
             if(check){
                 System.out.println("yes");
             }else {
