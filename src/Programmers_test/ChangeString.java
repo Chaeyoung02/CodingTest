@@ -1,4 +1,6 @@
-class Solution {
+package Programmers_test;
+
+class ChangeString {
     public int solution(String myString, String pat) {
         int answer = 0;
         String str = myString.replace("A", "X").replace("B","A").replace("X","B");

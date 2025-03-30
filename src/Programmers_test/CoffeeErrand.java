@@ -1,4 +1,5 @@
-class Solution {
+package Programmers_test;
+class CoffeeErrand {
     public int solution(String[] order) {
         int answer = 0;
          for(int i = 0; i < order.length; i++){

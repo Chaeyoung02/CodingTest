@@ -1,6 +1,7 @@
+package Programmers_test;
 import java.util.Arrays;
 
-public class Solution {
+public class CompareArrays {
     public int solution(int[] arr1, int[] arr2) {
         if (arr1.length != arr2.length) {
             return Integer.compare(arr1.length, arr2.length);
